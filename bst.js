@@ -8,16 +8,18 @@ class Node {
 
 
 class Tree {
-    constructor(sortedArray) {
-        this.root = this.buildTree(sortedArray);
+    constructor(unsortedArray) {
+        this.root = this.buildTree(unsortedArray);
     }
 
-    buildTree(array) {
+    buildTree(unsortedArray) {
         //find midpoint
         //create a root node using the midpoint
         //recursive call to the left using midpoint-1 as end
         //recursive call to the left using midpoint+1 as start
         //return the created node
+
+        const array = sortArray(unsortedArray);
 
         const start = 0;
         const end = array.length - 1;
@@ -48,6 +50,23 @@ function prettyPrint(node, prefix = "", isLeft = true) {
       prettyPrint(node.leftChild, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
 };
+
+//TRY USING A DIFFEREND SORT ALGORITHM OTHER THAN MERGE SORT
+// function sortArray(array) {
+//     //divide array in half
+
+//     if (array.length === 0) return array[0];
+
+//     const mid = Math.floor((0 + array.length-1) / 2);
+//     const leftHalf = array.slice(0, mid);
+//     const rightHalf = array.slice(mid);
+
+
+//     sortArray(leftHalf);
+//     sortArray(rightHalf);
+
+
+// }
 
 
 
