@@ -9,17 +9,20 @@ class Node {
 
 class Tree {
     constructor(unsortedArray) {
-        this.root = this.buildTree(unsortedArray);
+        const array = mergeSort(unsortedArray);
+        this.root = this.buildTree(array);
     }
 
-    buildTree(unsortedArray) {
+
+    buildTree(array) {
         //find midpoint
         //create a root node using the midpoint
         //recursive call to the left using midpoint-1 as end
         //recursive call to the left using midpoint+1 as start
         //return the created node
 
-        const array = sortArray(unsortedArray);
+        // const array = sortArray(unsortedArray);
+
 
         const start = 0;
         const end = array.length - 1;
@@ -51,27 +54,40 @@ function prettyPrint(node, prefix = "", isLeft = true) {
     }
 };
 
-//TRY USING A DIFFEREND SORT ALGORITHM OTHER THAN MERGE SORT
-// function sortArray(array) {
-//     //divide array in half
+//sorts array, removes duplicates
+function mergeSort (array) {
+  if (array.length === 1) return array;
 
-//     if (array.length === 0) return array[0];
+  const mid = Math.floor((array.length) / 2);
+  const left = array.slice(0, mid);
+  const right = array.slice(mid);
 
-//     const mid = Math.floor((0 + array.length-1) / 2);
-//     const leftHalf = array.slice(0, mid);
-//     const rightHalf = array.slice(mid);
+  const sortedLeft = mergeSort(left);
+  const sortedRight = mergeSort(right);
+
+  const sortedArray = [];
+  while (sortedLeft.length > 0 && sortedRight.length > 0) {
+    if (sortedLeft[0] === sortedRight[0]) {
+      sortedArray.push(sortedLeft[0]);
+      sortedLeft.shift();
+      sortedRight.shift();
+    } else if (sortedLeft[0] < sortedRight[0]) {
+      sortedArray.push(sortedLeft[0]);
+      sortedLeft.shift();
+    } else {
+      sortedArray.push(sortedRight[0]);
+      sortedRight.shift();
+    }
+  }
+
+  return sortedArray.concat(sortedLeft, sortedRight);
+}
 
 
-//     sortArray(leftHalf);
-//     sortArray(rightHalf);
-
-
-// }
 
 
 
-
-const array = [1, 2, 4, 5, 6, 7, 9];
+const array = [1, 4, 2, 5, 9, 6, 3, 5];
 
 const bst = new Tree(array);
 
