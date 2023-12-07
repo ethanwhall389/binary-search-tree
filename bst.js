@@ -40,21 +40,119 @@ class Tree {
   }
 
   insert(value) {
-    console.log('running insert')
-    console.log(value);
     let temp = this.root;
+    let previous = temp;
     while (temp !== null) {
-      if (value > temp) {
+      if (value > temp.data) {
+        previous = temp;
+        temp = temp.rightChild;
+      } else {
+        previous = temp;
+        temp = temp.leftChild;
+      }
+    }
+    if (value > previous.data) {
+      previous.rightChild = new Node(value);
+    } else {
+      previous.leftChild = new Node(value);
+    }
+  }
+
+  delete (value) {
+    //traverse the tree to the node in question
+    let temp = this.root;
+    let previous = temp;
+    while (temp.data !== value) {
+      previous = temp;
+      if (value > temp.data) {
         temp = temp.rightChild;
       } else {
         temp = temp.leftChild;
       }
     }
-    temp = new Node(value);
-    console.log(temp);
-    console.log(temp.leftChild);
+
+    const children = hasChildren(temp);
+    //case one-- node is at the end of tree with no children
+    if (children === 0) {
+      value > previous.data ? 
+      previous.rightChild = null : previous.leftChild = null;
+    }
+
+    //case two-- node has one single child
+    if (children === 1) {
+      let child;
+      temp.rightChild !== null ? 
+        child = temp.rightChild : child = temp.leftChild
+
+      temp.data > previous.data ?
+        previous.rightChild = child : previous.leftChild = child;
+
+      temp.rightChild = null;
+      temp.leftChild = null;
+    }
+
+    //case three-- node has two children
+    if (children === 2) {
+
+    }
   }
 
+  // delete(value) {
+  //   let temp = this.root;
+  //   let previous = temp;
+  //   while (temp.data !== value) {
+  //     previous = temp;
+  //     if (value > temp.data) {
+  //       temp = temp.rightChild;
+  //     } else {
+  //       temp = temp.leftChild;
+  //     }
+  //   }
+  //   console.log(temp);
+  //   let left = null;
+  //   let right = null;
+  //   if (temp.leftChild !== null) {
+  //     left = temp.leftChild;
+  //   } else if (temp.rightChild !== null) {
+  //     right = temp.rightChild;
+  //   }
+
+  //   let lowerNode;
+  //   let higherNode;
+  //   if (left === null || right.data < left) {
+  //     lowerNode = right;
+  //     higherNode = left;
+  //   } else if (right === null || left.data < right) {
+  //     lowerNode = left;
+  //     higherNode = right;
+  //   }
+
+  //   if (lowerNode < previous.data) {
+  //     previous.leftChild = lowerNode;
+  //   } else if (previous.data < lowerNode) {
+  //     previous.rightChild = lowerNode;
+  //   }
+  //   previous.rightChild = higherNode;
+    
+  //   //loop has finished, we are now inside of the node we want to delete.
+  //   //Check if currentNode has Lchild, extract the value if so.
+  //   //Check if currentNode has Rchild, extract the value if so.
+  //   //check if Lchild or Rchild is lower (null is always higher)
+  //     //if lowerNode < previous node, assign lowerNode to prev.LChild
+  //     //if lowerNode > previous node, assign lowerNode to prev.Rchild.
+  //     //Repeat conditionals, subbing higherNode for lowerNode.
+  // }
+
+}
+
+function hasChildren(root) {
+  if (root.leftChild === null && root.rightChild === null) {
+    return 0;
+  } else if (root.leftChild !== null && root.rightChild !== null) {
+    return 2;
+  } else if (root.leftChild !== null || root.rightChild !== null) {
+    return 1;
+  }
 }
 
 
@@ -112,7 +210,10 @@ const bst = new Tree(array);
 prettyPrint(bst.root);
 
 bst.insert(8);
+bst.insert(0);
 
 prettyPrint(bst.root);
 
-console.log(bst);
+bst.delete(1);
+
+prettyPrint(bst.root);
