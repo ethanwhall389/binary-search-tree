@@ -113,6 +113,52 @@ class Tree {
       temp.data = predecessor.data;
     }
   }
+
+  levelOrder(cb) {
+    const queue = [this.root];
+    const endArray = []
+    while(queue.length !== 0) {
+      //Read first queue item
+      console.log(queue[0].data);
+      endArray.push(queue[0].data);
+      
+      //push .left and .right children into queue
+      //shift 0 off of queue
+      if (queue[0].leftChild !== null) {
+        queue.push(queue[0].leftChild);
+      }
+      if (queue[0].rightChild !== null) {
+        queue.push(queue[0].rightChild);
+      }
+      queue.shift();
+    }
+    if (cb) {
+      cb(endArray);
+    } else {
+      console.log(endArray);
+    }
+  }
+
+  inOrder(root, cb) {
+    //Recursive steps:
+      //Visit Left subtree
+      //Visit root node
+      //Visit Right subtree
+
+    if (root === null) return [];
+    const left = this.inOrder(root.leftChild);
+    const rootData = root.data;
+    const right = this.inOrder(root.rightChild);
+
+    const array = left.concat(rootData, right);
+    
+    //cb will only exist in the first call of inOrder
+    if (cb) {
+      return cb(array);
+    } else {
+      return array;
+    }
+  }
 }
 
 function hasChildren(root) {
@@ -182,21 +228,37 @@ prettyPrint(bst.root);
 console.log('Insert 7');
 bst.insert(7);
 
-console.log('Delete 1');
-bst.delete(1);
+// console.log('Delete 1');
+// bst.delete(1);
 
 prettyPrint(bst.root);
 
-console.log('Delete 2');
-bst.delete(2);
-prettyPrint(bst.root);
+// console.log('Delete 2');
+// bst.delete(2);
+// prettyPrint(bst.root);
 
-console.log('Delete 6');
-bst.delete(6);
-prettyPrint(bst.root);
+// console.log('Delete 6');
+// bst.delete(6);
+// prettyPrint(bst.root);
 
-console.log('Delete root (4)');
-bst.delete(4);
-prettyPrint(bst.root);
+// console.log('Delete root (4)');
+// bst.delete(4);
+// prettyPrint(bst.root);
 
 console.log(bst.find(9));
+
+bst.levelOrder( (array) => {
+  let sum = 0;
+  for (let i = 0; i < array.length; i++) {
+    sum += array[i];
+  }
+  console.log(sum);
+});
+
+console.log(bst.inOrder(bst.root, (array) => {
+  let sum = 0;
+  for (let i = 0; i < array.length; i++) {
+    sum += array[i];
+  }
+  console.log(sum);
+}));
