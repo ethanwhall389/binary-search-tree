@@ -80,69 +80,27 @@ class Tree {
 
     //case two-- node has one single child
     if (children === 1) {
-      let child;
-      temp.rightChild !== null ? 
-        child = temp.rightChild : child = temp.leftChild
-
-      temp.data > previous.data ?
-        previous.rightChild = child : previous.leftChild = child;
-
-      temp.rightChild = null;
-      temp.leftChild = null;
+      if (temp.rightChild !== null) {
+        temp.data = temp.rightChild.data;
+        temp.rightChild = null;
+      } else {
+        temp.data = temp.leftChild.data;
+        temp.leftChild = null;
+      }
     }
 
     //case three-- node has two children
     if (children === 2) {
-
+      //traversal temp variable
+      let traversal = temp.rightChild;
+      while(traversal.leftChild !== null) {
+        traversal = traversal.leftChild;
+      }
+      const predecessor = traversal;
+      this.delete(traversal.data);
+      temp.data = predecessor.data;
     }
   }
-
-  // delete(value) {
-  //   let temp = this.root;
-  //   let previous = temp;
-  //   while (temp.data !== value) {
-  //     previous = temp;
-  //     if (value > temp.data) {
-  //       temp = temp.rightChild;
-  //     } else {
-  //       temp = temp.leftChild;
-  //     }
-  //   }
-  //   console.log(temp);
-  //   let left = null;
-  //   let right = null;
-  //   if (temp.leftChild !== null) {
-  //     left = temp.leftChild;
-  //   } else if (temp.rightChild !== null) {
-  //     right = temp.rightChild;
-  //   }
-
-  //   let lowerNode;
-  //   let higherNode;
-  //   if (left === null || right.data < left) {
-  //     lowerNode = right;
-  //     higherNode = left;
-  //   } else if (right === null || left.data < right) {
-  //     lowerNode = left;
-  //     higherNode = right;
-  //   }
-
-  //   if (lowerNode < previous.data) {
-  //     previous.leftChild = lowerNode;
-  //   } else if (previous.data < lowerNode) {
-  //     previous.rightChild = lowerNode;
-  //   }
-  //   previous.rightChild = higherNode;
-    
-  //   //loop has finished, we are now inside of the node we want to delete.
-  //   //Check if currentNode has Lchild, extract the value if so.
-  //   //Check if currentNode has Rchild, extract the value if so.
-  //   //check if Lchild or Rchild is lower (null is always higher)
-  //     //if lowerNode < previous node, assign lowerNode to prev.LChild
-  //     //if lowerNode > previous node, assign lowerNode to prev.Rchild.
-  //     //Repeat conditionals, subbing higherNode for lowerNode.
-  // }
-
 }
 
 function hasChildren(root) {
@@ -209,11 +167,22 @@ const bst = new Tree(array);
 
 prettyPrint(bst.root);
 
-bst.insert(8);
-bst.insert(0);
+console.log('Insert 7');
+bst.insert(7);
+
+console.log('Delete 1');
+bst.delete(1);
 
 prettyPrint(bst.root);
 
-bst.delete(1);
+console.log('Delete 2');
+bst.delete(2);
+prettyPrint(bst.root);
 
+console.log('Delete 6');
+bst.delete(6);
+prettyPrint(bst.root);
+
+console.log('Delete root (4)');
+bst.delete(4);
 prettyPrint(bst.root);
