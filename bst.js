@@ -39,6 +39,18 @@ class Tree {
       return rootNode;
   }
 
+  find(value) {
+    let temp = this.root;
+    while(temp !== null && temp.data !== value) {
+      if (value > temp.data) {
+        temp = temp.rightChild;
+      } else {
+        temp = temp.leftChild;
+      }
+    }
+    return temp == null ? null : temp;
+  }
+
   insert(value) {
     let temp = this.root;
     let previous = temp;
@@ -186,3 +198,5 @@ prettyPrint(bst.root);
 console.log('Delete root (4)');
 bst.delete(4);
 prettyPrint(bst.root);
+
+console.log(bst.find(9));
