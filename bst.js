@@ -159,6 +159,65 @@ class Tree {
       return array;
     }
   }
+
+  preOrder(root, cb) {
+    if (root === null) return [];
+    const rootData = [root.data];
+    const left = this.preOrder(root.leftChild);
+    const right = this.preOrder(root.rightChild);
+
+    const array = rootData.concat(left, right);
+
+    if (cb) {
+      return cb(array);
+    } else {
+      return array;
+    }
+  }
+
+  postOrder(root, cb) {
+    //left, right, root
+    if (root === null) return [];
+    const left = this.postOrder(root.leftChild);
+    const right = this.postOrder(root.rightChild);
+    const rootData = root.data;
+
+    const array = left.concat(right, rootData);
+
+    if (cb) {
+      return cb(array);
+    } else {
+      return array;
+    }
+  }
+
+  height(value) {
+    //find node
+    const node = this.find(value);
+
+    //recursively move one direction
+    //count num of nodes in that direction
+      //if more than previous count, replace count.
+
+    let nodeRight = node;
+    let nodeLeft = node;
+    let rightChildren = 0;
+    let leftChildren = 0;
+    while (nodeRight !== null) {
+      nodeRight = nodeRight.rightChild;
+      rightChildren ++;
+      while (nodeLeft !== null) {
+        nodeLeft = nodeLeft.leftChild;
+        leftChildren ++;
+      }
+    }
+
+    console.log(rightChildren);
+    console.log(leftChildren);
+  
+    
+
+  }
 }
 
 function hasChildren(root) {
@@ -255,10 +314,22 @@ bst.levelOrder( (array) => {
   console.log(sum);
 });
 
-console.log(bst.inOrder(bst.root, (array) => {
-  let sum = 0;
-  for (let i = 0; i < array.length; i++) {
-    sum += array[i];
-  }
-  console.log(sum);
-}));
+
+console.log('Depth first inOrder:')
+console.log(bst.inOrder(bst.root, 
+//   (array) => {
+//   let sum = 0;
+//   for (let i = 0; i < array.length; i++) {
+//     sum += array[i];
+//   }
+//   console.log(sum);
+// }
+));
+
+console.log('Depth first preOrder:')
+console.log(bst.preOrder(bst.root));
+
+console.log('Depth first postOrder:');
+console.log(bst.postOrder(bst.root));
+
+bst.height(6);
