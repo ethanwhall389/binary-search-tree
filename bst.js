@@ -116,12 +116,11 @@ class Tree {
     }
   }
 
-  levelOrder(cb) {
-    const queue = [this.root];
+  levelOrder(root, cb) {
+    const queue = [root];
     const endArray = []
     while(queue.length !== 0) {
       //Read first queue item
-      console.log(queue[0].data);
       endArray.push(queue[0].data);
       
       //push .left and .right children into queue
@@ -137,7 +136,7 @@ class Tree {
     if (cb) {
       cb(endArray);
     } else {
-      console.log(endArray);
+      return endArray;
     }
   }
 
@@ -251,9 +250,9 @@ class Tree {
     }
     
     if (checkBalance(root) === 0) {
-      console.log('Tree is balanced');
+      return true;
     } else {
-      console.log('Tree is unbalanced');
+      return false;
     }
 
   }

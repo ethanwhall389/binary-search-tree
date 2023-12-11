@@ -1,4 +1,4 @@
-export {mergeSort, prettyPrint, hasChildren};
+export {mergeSort, prettyPrint, hasChildren, createRandomArray};
 
 //sorts array, removes duplicates
 function mergeSort (array) {
@@ -52,4 +52,14 @@ function hasChildren(root) {
     } else if (root.leftChild !== null || root.rightChild !== null) {
       return 1;
     }
-  }
+}
+
+function createRandomArray() {
+    const iterations = Math.floor(Math.random() * 45);
+    
+    let array = []
+    for (let i = 0; i < iterations; i++) {
+        array.push(Math.floor(Math.random() * 100));
+    }
+    return array;
+}
