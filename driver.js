@@ -1,7 +1,14 @@
 import Tree from "./bst.js";
 import { prettyPrint, createRandomArray } from "./utility-functions.js";
 
-let bst = new Tree(createRandomArray());
+const randomArray = createRandomArray();
+
+console.log('Binary search tree created using these randomly generated values:');
+console.log(randomArray);
+
+console.log('\n******************\n');
+
+let bst = new Tree(randomArray);
 
 prettyPrint(bst.root);
 
