@@ -195,26 +195,53 @@ class Tree {
     //find node
     const node = this.find(value);
 
-    //recursively move one direction
-    //count num of nodes in that direction
-      //if more than previous count, replace count.
+    function findHeight (node) {
+      if (node === null) return -1;
+      let heightLeft = findHeight(node.leftChild);
+      let heightRight = findHeight(node.rightChild);
 
-    let nodeRight = node;
-    let nodeLeft = node;
-    let rightChildren = 0;
-    let leftChildren = 0;
-    while (nodeRight !== null) {
-      nodeRight = nodeRight.rightChild;
-      rightChildren ++;
-      while (nodeLeft !== null) {
-        nodeLeft = nodeLeft.leftChild;
-        leftChildren ++;
+      if (heightLeft > heightRight) {
+        return heightLeft + 1;
+      } else {
+        return heightRight + 1;
       }
     }
 
-    console.log(rightChildren);
-    console.log(leftChildren);
-  
+    return findHeight(node);
+  }
+
+  depth(value) {
+    let node = this.root;
+    let depth = 0;
+    while (node.data !== value) {
+      if (value > node.data) {
+        node = node.rightChild;
+      } else {
+        node = node.leftChild;
+      }
+      depth += 1;
+    }
+    return depth;
+  }
+
+  isBalanced(root) {
+    for (let i = 0; i < this.depth(root); i++) {
+
+    }
+
+
+    if (root === null) return null;
+
+    const right = this.isBalanced(root.rightChild);
+    const left = this.isBalanced(root.leftChild);
+
+    if (Math.abs(rightHeight - leftHeight) !== 2) {
+
+    }
+
+    const rightHeight = this.height(root.rightChild);
+    const leftHeight = this.height(root.rightChild);
+    
     
 
   }
@@ -332,4 +359,6 @@ console.log(bst.preOrder(bst.root));
 console.log('Depth first postOrder:');
 console.log(bst.postOrder(bst.root));
 
-bst.height(6);
+console.log(bst.height(4));
+
+console.log(bst.depth(4));
