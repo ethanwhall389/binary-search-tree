@@ -9,7 +9,7 @@ class Node {
 }
 
 
-class Tree {
+export default class Tree {
     constructor(unsortedArray) {
         const array = mergeSort(unsortedArray);
         this.root = this.buildTree(array);
@@ -22,9 +22,6 @@ class Tree {
       //recursive call to the left using midpoint-1 as end
       //recursive call to the left using midpoint+1 as start
       //return the created node
-
-      // const array = sortArray(unsortedArray);
-
 
       const start = 0;
       const end = array.length - 1;
@@ -141,11 +138,6 @@ class Tree {
   }
 
   inOrder(root, cb) {
-    //Recursive steps:
-      //Visit Left subtree
-      //Visit root node
-      //Visit Right subtree
-
     if (root === null) return [];
     const left = this.inOrder(root.leftChild);
     const rootData = root.data;
@@ -177,7 +169,6 @@ class Tree {
   }
 
   postOrder(root, cb) {
-    //left, right, root
     if (root === null) return [];
     const left = this.postOrder(root.leftChild);
     const right = this.postOrder(root.rightChild);
@@ -193,7 +184,6 @@ class Tree {
   }
 
   height(value) {
-    //find node
     const node = this.find(value);
 
     function findHeight (node) {
@@ -207,7 +197,6 @@ class Tree {
         return heightRight + 1;
       }
     }
-
     return findHeight(node);
   }
 
@@ -226,13 +215,6 @@ class Tree {
   }
 
   isBalanced(root) {
-
-    //check the height of left subtree
-    //check the height of right subtree
-    //compare the two
-      //if balanced, return 0;
-      //if not balanced, return 1;
-
     const checkBalance = (node) => {
       if (node === null) return 0;
       // console.log(`Node: ${node.data}`);
@@ -254,7 +236,6 @@ class Tree {
     } else {
       return false;
     }
-
   }
 
   rebalance(root) {
@@ -262,134 +243,3 @@ class Tree {
     return new Tree (newArray);
   }
 }
-
-// function hasChildren(root) {
-//   if (root.leftChild === null && root.rightChild === null) {
-//     return 0;
-//   } else if (root.leftChild !== null && root.rightChild !== null) {
-//     return 2;
-//   } else if (root.leftChild !== null || root.rightChild !== null) {
-//     return 1;
-//   }
-// }
-
-
-// function prettyPrint(node, prefix = "", isLeft = true) {
-//     if (node === null) {
-//       return;
-//     }
-//     if (node.rightChild !== null) {
-//       prettyPrint(node.rightChild, `${prefix}${isLeft ? "│   " : "    "}`, false);
-//     }
-//     console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-//     if (node.leftChild !== null) {
-//       prettyPrint(node.leftChild, `${prefix}${isLeft ? "    " : "│   "}`, true);
-//     }
-// }
-
-// //sorts array, removes duplicates
-// function mergeSort (array) {
-//   if (array.length === 1) return array;
-
-//   const mid = Math.floor((array.length) / 2);
-//   const left = array.slice(0, mid);
-//   const right = array.slice(mid);
-
-//   const sortedLeft = mergeSort(left);
-//   const sortedRight = mergeSort(right);
-
-//   const sortedArray = [];
-//   while (sortedLeft.length > 0 && sortedRight.length > 0) {
-//     if (sortedLeft[0] === sortedRight[0]) {
-//       sortedArray.push(sortedLeft[0]);
-//       sortedLeft.shift();
-//       sortedRight.shift();
-//     } else if (sortedLeft[0] < sortedRight[0]) {
-//       sortedArray.push(sortedLeft[0]);
-//       sortedLeft.shift();
-//     } else {
-//       sortedArray.push(sortedRight[0]);
-//       sortedRight.shift();
-//     }
-//   }
-
-//   return sortedArray.concat(sortedLeft, sortedRight);
-// }
-
-
-
-
-
-// const array = [1, 4, 2, 5, 9, 6, 3, 5];
-
-// const bst = new Tree(array);
-
-
-// prettyPrint(bst.root);
-
-// console.log('Insert 7');
-// bst.insert(7);
-
-// // console.log('Delete 1');
-// // bst.delete(1);
-
-// prettyPrint(bst.root);
-
-// // console.log('Delete 2');
-// // bst.delete(2);
-// // prettyPrint(bst.root);
-
-// // console.log('Delete 6');
-// // bst.delete(6);
-// // prettyPrint(bst.root);
-
-// // console.log('Delete root (4)');
-// // bst.delete(4);
-// // prettyPrint(bst.root);
-
-// console.log(bst.find(9));
-
-// bst.levelOrder( (array) => {
-//   let sum = 0;
-//   for (let i = 0; i < array.length; i++) {
-//     sum += array[i];
-//   }
-//   console.log(sum);
-// });
-
-
-// console.log('Depth first inOrder:')
-// console.log(bst.inOrder(bst.root, 
-// //   (array) => {
-// //   let sum = 0;
-// //   for (let i = 0; i < array.length; i++) {
-// //     sum += array[i];
-// //   }
-// //   console.log(sum);
-// // }
-// ));
-
-// console.log('Depth first preOrder:')
-// console.log(bst.preOrder(bst.root));
-
-// console.log('Depth first postOrder:');
-// console.log(bst.postOrder(bst.root));
-
-// console.log(bst.height(4));
-
-// console.log(bst.depth(4));
-
-// bst.insert(8);
-// bst.insert(7.5);
-
-// prettyPrint(bst.root);
-
-// bst.isBalanced(bst.root);
-
-// const newTree = bst.rebalance(bst.root);
-
-// prettyPrint(newTree.root);
-
-
-
-export default Tree;
