@@ -1,6 +1,7 @@
 {
   "name": "binary-search-tree",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "bst.js",
   "scripts": {

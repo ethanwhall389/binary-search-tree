@@ -1,3 +1,5 @@
+import { mergeSort, hasChildren } from "./utility-functions.js";
+
 class Node {
     constructor(data) {
         this.data = data;
@@ -225,140 +227,170 @@ class Tree {
   }
 
   isBalanced(root) {
-    for (let i = 0; i < this.depth(root); i++) {
 
+    //check the height of left subtree
+    //check the height of right subtree
+    //compare the two
+      //if balanced, return 0;
+      //if not balanced, return 1;
+
+    const checkBalance = (node) => {
+      if (node === null) return 0;
+      // console.log(`Node: ${node.data}`);
+      // console.log(`LeftChild: ${node.leftChild.data}`);
+      const leftHeight = node.leftChild ? this.height(node.leftChild.data) : 0;
+      const rightHeight = node.rightChild ? this.height(node.rightChild.data) : 0;
+      const checkL = checkBalance(node.leftChild);
+      const checkR = checkBalance(node.rightChild);
+
+      if (Math.abs(leftHeight - rightHeight) <= 2) {
+        return checkL + checkR + 0;
+      } else {
+        return checkL + checkR + 1;
+      }
     }
-
-
-    if (root === null) return null;
-
-    const right = this.isBalanced(root.rightChild);
-    const left = this.isBalanced(root.leftChild);
-
-    if (Math.abs(rightHeight - leftHeight) !== 2) {
-
-    }
-
-    const rightHeight = this.height(root.rightChild);
-    const leftHeight = this.height(root.rightChild);
     
-    
-
-  }
-}
-
-function hasChildren(root) {
-  if (root.leftChild === null && root.rightChild === null) {
-    return 0;
-  } else if (root.leftChild !== null && root.rightChild !== null) {
-    return 2;
-  } else if (root.leftChild !== null || root.rightChild !== null) {
-    return 1;
-  }
-}
-
-
-function prettyPrint(node, prefix = "", isLeft = true) {
-    if (node === null) {
-      return;
-    }
-    if (node.rightChild !== null) {
-      prettyPrint(node.rightChild, `${prefix}${isLeft ? "│   " : "    "}`, false);
-    }
-    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-    if (node.leftChild !== null) {
-      prettyPrint(node.leftChild, `${prefix}${isLeft ? "    " : "│   "}`, true);
-    }
-};
-
-//sorts array, removes duplicates
-function mergeSort (array) {
-  if (array.length === 1) return array;
-
-  const mid = Math.floor((array.length) / 2);
-  const left = array.slice(0, mid);
-  const right = array.slice(mid);
-
-  const sortedLeft = mergeSort(left);
-  const sortedRight = mergeSort(right);
-
-  const sortedArray = [];
-  while (sortedLeft.length > 0 && sortedRight.length > 0) {
-    if (sortedLeft[0] === sortedRight[0]) {
-      sortedArray.push(sortedLeft[0]);
-      sortedLeft.shift();
-      sortedRight.shift();
-    } else if (sortedLeft[0] < sortedRight[0]) {
-      sortedArray.push(sortedLeft[0]);
-      sortedLeft.shift();
+    if (checkBalance(root) === 0) {
+      console.log('Tree is balanced');
     } else {
-      sortedArray.push(sortedRight[0]);
-      sortedRight.shift();
+      console.log('Tree is unbalanced');
     }
+
   }
 
-  return sortedArray.concat(sortedLeft, sortedRight);
+  rebalance(root) {
+    const newArray = this.inOrder(root);
+    return new Tree (newArray);
+  }
 }
 
+// function hasChildren(root) {
+//   if (root.leftChild === null && root.rightChild === null) {
+//     return 0;
+//   } else if (root.leftChild !== null && root.rightChild !== null) {
+//     return 2;
+//   } else if (root.leftChild !== null || root.rightChild !== null) {
+//     return 1;
+//   }
+// }
+
+
+// function prettyPrint(node, prefix = "", isLeft = true) {
+//     if (node === null) {
+//       return;
+//     }
+//     if (node.rightChild !== null) {
+//       prettyPrint(node.rightChild, `${prefix}${isLeft ? "│   " : "    "}`, false);
+//     }
+//     console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+//     if (node.leftChild !== null) {
+//       prettyPrint(node.leftChild, `${prefix}${isLeft ? "    " : "│   "}`, true);
+//     }
+// }
+
+// //sorts array, removes duplicates
+// function mergeSort (array) {
+//   if (array.length === 1) return array;
+
+//   const mid = Math.floor((array.length) / 2);
+//   const left = array.slice(0, mid);
+//   const right = array.slice(mid);
+
+//   const sortedLeft = mergeSort(left);
+//   const sortedRight = mergeSort(right);
+
+//   const sortedArray = [];
+//   while (sortedLeft.length > 0 && sortedRight.length > 0) {
+//     if (sortedLeft[0] === sortedRight[0]) {
+//       sortedArray.push(sortedLeft[0]);
+//       sortedLeft.shift();
+//       sortedRight.shift();
+//     } else if (sortedLeft[0] < sortedRight[0]) {
+//       sortedArray.push(sortedLeft[0]);
+//       sortedLeft.shift();
+//     } else {
+//       sortedArray.push(sortedRight[0]);
+//       sortedRight.shift();
+//     }
+//   }
+
+//   return sortedArray.concat(sortedLeft, sortedRight);
+// }
 
 
 
 
-const array = [1, 4, 2, 5, 9, 6, 3, 5];
 
-const bst = new Tree(array);
+// const array = [1, 4, 2, 5, 9, 6, 3, 5];
+
+// const bst = new Tree(array);
 
 
-prettyPrint(bst.root);
-
-console.log('Insert 7');
-bst.insert(7);
-
-// console.log('Delete 1');
-// bst.delete(1);
-
-prettyPrint(bst.root);
-
-// console.log('Delete 2');
-// bst.delete(2);
 // prettyPrint(bst.root);
 
-// console.log('Delete 6');
-// bst.delete(6);
+// console.log('Insert 7');
+// bst.insert(7);
+
+// // console.log('Delete 1');
+// // bst.delete(1);
+
 // prettyPrint(bst.root);
 
-// console.log('Delete root (4)');
-// bst.delete(4);
-// prettyPrint(bst.root);
+// // console.log('Delete 2');
+// // bst.delete(2);
+// // prettyPrint(bst.root);
 
-console.log(bst.find(9));
+// // console.log('Delete 6');
+// // bst.delete(6);
+// // prettyPrint(bst.root);
 
-bst.levelOrder( (array) => {
-  let sum = 0;
-  for (let i = 0; i < array.length; i++) {
-    sum += array[i];
-  }
-  console.log(sum);
-});
+// // console.log('Delete root (4)');
+// // bst.delete(4);
+// // prettyPrint(bst.root);
 
+// console.log(bst.find(9));
 
-console.log('Depth first inOrder:')
-console.log(bst.inOrder(bst.root, 
-//   (array) => {
+// bst.levelOrder( (array) => {
 //   let sum = 0;
 //   for (let i = 0; i < array.length; i++) {
 //     sum += array[i];
 //   }
 //   console.log(sum);
-// }
-));
+// });
 
-console.log('Depth first preOrder:')
-console.log(bst.preOrder(bst.root));
 
-console.log('Depth first postOrder:');
-console.log(bst.postOrder(bst.root));
+// console.log('Depth first inOrder:')
+// console.log(bst.inOrder(bst.root, 
+// //   (array) => {
+// //   let sum = 0;
+// //   for (let i = 0; i < array.length; i++) {
+// //     sum += array[i];
+// //   }
+// //   console.log(sum);
+// // }
+// ));
 
-console.log(bst.height(4));
+// console.log('Depth first preOrder:')
+// console.log(bst.preOrder(bst.root));
 
-console.log(bst.depth(4));
+// console.log('Depth first postOrder:');
+// console.log(bst.postOrder(bst.root));
+
+// console.log(bst.height(4));
+
+// console.log(bst.depth(4));
+
+// bst.insert(8);
+// bst.insert(7.5);
+
+// prettyPrint(bst.root);
+
+// bst.isBalanced(bst.root);
+
+// const newTree = bst.rebalance(bst.root);
+
+// prettyPrint(newTree.root);
+
+
+
+export default Tree;
